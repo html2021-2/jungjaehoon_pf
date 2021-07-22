@@ -10,7 +10,8 @@ $(document).ready(function(){
 
     /* fade */
     $(window).on('scroll', function () {
-    const scrollY = $(this).scrollTop() + $(this).height() * 2/3; 
+        const scrollY = $(this).scrollTop() + $(this).height() * 2/3; 
+        const scrollTop = $(this).scrollTop(); 
 
         $('.fade').each(function () {
             if (scrollY > $(this).offset().top) {
@@ -19,7 +20,12 @@ $(document).ready(function(){
             $(this).removeClass('on');
             }
         });
+
+        // 텍스트 한글자씩 처리하기 위해 h1.logo에 .on 제어
+        if (scrollTop >= 0 && scrollTop <= $(this).height()) $('.logo').addClass('on');
+        else $('.logo').removeClass('on');
     });
+    $(window).trigger('scroll');
 
     // 메뉴 열기
     $('#header .toggle').on('click', function () {
@@ -39,7 +45,6 @@ $(document).ready(function(){
         });
    });
 
-    
     $("#gnb ul li a").on({
         'mouseenter focus': function () {
             const bgNum = $(this).parent().index();
@@ -55,51 +60,32 @@ $(document).ready(function(){
             $('html, body').stop().animate({scrollTop: $tg.offset().top});
         }
     });
-/*  
-    $('.toggle').click(function() {
-        $(this).toggleClass("active");
-    $('.gnb_bg').toggleClass("active");
+
+    // 텍스트 한글자씩 처리
+    const $logo = $('.logo');
+    let wordArray = $logo.html().split(' ');
+    // console.log(wordArray);
+    let tagWrite = '';
+    for (let i = 0; i < wordArray.length; i++) {
+      $logo.html(''); //기존 태그 우선 지우기
+      if (wordArray[i] === '<br>') {
+        tagWrite += '<br>';
+       } else {
+        let spanArray = wordArray[i].split(''); //한글자씩 잘라서 배열에 저장
+        // console.log(spanArray);
+        // 반복문을 통해 각 div 부모 안에 막내 자식으로 span 동적생성
+        tagWrite += '<div class="word">';
+        for (let j = 0; j < spanArray.length; j++) {
+          tagWrite += `<span class="up">${spanArray[j]}</span>`;
+        }
+        tagWrite += '</div>';
+      }
+      $logo.append(tagWrite);
+    }
+
+    // delay 시간 지정
+    $('.logo .word .up').each(function (idx) {
+        $(this).css('animationDelay', (idx * 0.04) + 0.4 + 's');
     });
 
-    const all = $("#gnb ul li a")
-    const home = $("#gnb .menu1 a")
-    const project = $("#gnb .menu2 a")
-    const about = $("#gnb .menu3 a")
-    const contact = $("#gnb .menu4 a")
-    const bg = $(".gnb_bg")
-
-    all.click(function(){
-        $(bg).removeClass("active");
-        $('.toggle').removeClass("active");
-    });
-
-    스크립트에서 css()메서드를 사용하는 대신 클래스명을 추가합니다
-    home.mouseover(function(){
-        $(bg).css("background","#233067")
-    });
-    home.mouseout(function(){
-        $(bg).css("background","#000")
-    });
-    project.mouseover(function(){
-        $(bg).css("background","#2f4f4f")
-    });
-    project.mouseout(function(){
-        $(bg).css("background","#000")
-    });
-    about.mouseover(function(){
-        $(bg).css("background","#6f4f28")
-    });
-    about.mouseout(function(){
-        $(bg).css("background","#000")
-    });
-    contact.mouseover(function(){
-        $(bg).css("background","#723838")
-    });
-    contact.mouseout(function(){
-        $(bg).css("background","#000")
-    }); */
-      
-
-
-});    
-    
+});  
