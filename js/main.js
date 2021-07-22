@@ -7,7 +7,7 @@ $(document).ready(function(){
         arrows: false,
     });
      */
-    
+
     /* fade */
     $(window).on('scroll', function () {
     const scrollY = $(this).scrollTop() + $(this).height() * 2/3; 
@@ -47,6 +47,12 @@ $(document).ready(function(){
         },
         'mouseleave blur': function () {
             $('#header .gnb_bg').removeClass('bg0 bg1 bg2 bg3');
+        },
+        click: function (e) {
+            e.preventDefault();
+            $('#header .toggle').removeClass('active').next().removeClass('active');
+            const $tg =  $($(this).attr('href'));
+            $('html, body').stop().animate({scrollTop: $tg.offset().top});
         }
     });
 /*  
