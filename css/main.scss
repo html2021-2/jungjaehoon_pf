@@ -1,18 +1,20 @@
 @charset "utf-8";
+@import "_var", "_mixin";
 
+#wrap{
+  overflow: hidden;
+}
 /* header */
-
 #header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 999;
   width: 100%;
 }
 
 .header_wrap {
   .toggle {
-    /* visibility: hidden; max-height: 0; overflow: hidden; */
     display: block;
     position: absolute;
     top: 3vh;
@@ -21,10 +23,10 @@
 
     span {
       display: block;
-      background: #121212;
+      background: $black;
       width: 40px;
       height: 3px;
-      border: 1px solid #FFF;
+      border: 1px solid #fff;
       transition: 0.25s margin 0.25s, 0.25s transform;
 
       &:nth-child(1) {
@@ -38,7 +40,7 @@
 
     &.active span {
       transition: 0.25s margin, 0.25s transform 0.25s;
-      z-index: 1000;
+      z-index: 999;
 
       &:nth-child(1) {
         margin-top: 9px;
@@ -60,12 +62,11 @@
   .gnb_bg {
     position: fixed;
     width: 100%;
-    background: #000;
+    background: $black;
     color: #fff;
     font-weight: 700;
-    z-index: 99;
+    z-index: 10;
     visibility: hidden;
-    opacity: 0;
     transition: all 0.5s;
 
     &.bg0 {
@@ -77,17 +78,16 @@
     }
 
     &.bg2 {
-      background: #6f4f28;
-    }
-
-    &.bg3 {
       background: #723838;
     }
+    /*
+    &.bg3 {
+      background: #6f4f28;
+    }*/
 
     &.active {
       visibility: visible;
       height: 100%;
-      opacity: 0.9;
     }
 
     li {
@@ -100,7 +100,7 @@
         opacity: 1;
         left: 0;
         transition: all .5s;
-        font-family: "NanumMyeongjo";
+        font-family: $engFont;
       }
 
       .menu1 {
@@ -121,12 +121,6 @@
     }
   }
 }
-
-/* 메뉴를 선택하면 배경색 변경하기 */
-
-/* .gnb_bg.active */
-
-/* transition을 after 상태에 주면 시작만 transition이 일어나고 되돌아가지는 않는다 */
 
 /* nav */
 
@@ -154,8 +148,8 @@
         width: 0%;
         height: 2vw;
         z-index: -1;
-        background: linear-gradient(to right, #F7971E 0%, #FFD200 100%);
-        transition: all 0.2s ease;
+        background: linear-gradient(to right, #f7971e 0%, #ffd200 100%);
+        transition: all 0.3s ease;
       }
 
       &:hover::after {
@@ -165,28 +159,24 @@
   }
 }
 
-/* left로 이동하려면 position 속성이 필요함 */
-
 /* home */
 
 #home {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1;
   width: 100%;
-  background: #FFF;
-  color: #222;
-  border-bottom: 1px solid #222;
+  z-index: -1;
+  border-bottom: 1px solid $black;
 }
 
 .home_wrap {
   position: relative;
   width: 100%;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex;
+  @include justify-content;
+  @include align-items;
 
   h1 {
     font-size: 5vw;
@@ -202,7 +192,7 @@
 
       .up {
         opacity: 0;
-        transform: translateY(-110px);
+        transform: translateY(-8vw);
         display: inline-block;
       }
     }
@@ -211,47 +201,12 @@
       animation: fadeUp 1s forwards;
     }
   }
-
-  .scroll {
-    position: absolute;
-    bottom: 15%;
-    right: 8%;
-  }
-
-  a span {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 36px;
-    height: 36px;
-    margin-left: -12px;
-    border-left: 1px solid #222;
-    border-bottom: 1px solid #222;
-    transform: rotate(-45deg);
-    animation: sc 2s infinite;
-    opacity: 0;
-    box-sizing: border-box;
-
-    &:nth-of-type(1) {
-      animation-delay: 0s;
-    }
-
-    &:nth-of-type(2) {
-      top: 16px;
-      animation-delay: 0.15s;
-    }
-
-    &:nth-of-type(3) {
-      top: 32px;
-      animation-delay: 0.3s;
-    }
-  }
 }
 
 @keyframes fadeUp {
   0% {
     opacity: 0;
-    transform: translateY(-110px);
+    transform: translateY(-8vw);
   }
 
   100% {
@@ -260,35 +215,22 @@
   }
 }
 
-@keyframes sc {
-  0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
 /* index */
-
 #index {
   padding-top: 100vh;
 }
 
 .index_wrap .band {
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid $black;
   overflow: hidden;
   background: #fff;
+
   &:nth-of-type(1) {
-    border-top: 1px solid #000;
+    border-top: 1px solid $black;
   }
+
   p {
-    font-family: 'NanumMyeongjo';
+    font-family: $engFont;
     font-weight: 300;
     font-size: 8vw;
     white-space: nowrap;
@@ -299,7 +241,7 @@
     display: inline-block;
     width: 9vw;
     height: 0.5vw;
-    background: #222;
+    background: $black;
     vertical-align: middle;
   }
 }
@@ -312,27 +254,32 @@
 
 .introduce_wrap {
   .img_box {
-    background: url(../img/city-336708_1920.jpg) no-repeat center (center / cover);
-    height: 100vh;
     position: relative;
+    background: url(../img/city.jpg) no-repeat center (center / cover);
+    height: 100vh;
 
     div {
       position: absolute;
-      width: 292px;
+      width: 17vw;
       animation: keyword infinite 1s ease-in-out alternate;
-      button{
-        background: #1e1e1e;
+
+      button {
+        background: $black;
         color: #fff;
         border-radius: 0.2vw;
         padding: 0.5vw 0.8vw;
+        font-family: $engFont;
         font-size: 1.5vw;
       }
-      p{
+
+      p {
         display: none;
         background: #fff;
-        width: 250px;
-        padding: 20px;
-        border: 1px solid #000;
+        width: 12vw;
+        padding: 1vw;
+        border: 1px solid $black;
+        font-size: 1vw;
+        line-height: 1.5;
       }
 
       &:nth-child(1) {
@@ -341,26 +288,30 @@
       }
 
       &:nth-child(2) {
-        top: 55%;
-        right: 35%;
+        top: 20%;
+        right: 40%;
       }
 
       &:nth-child(3) {
-        top: 20%;
-        right: 50%;
+        top: 55%;
+        right: 25%;
+      }
+
+      .on {
+        display: block;
       }
     }
   }
 
   .txt_box {
-    display: flex;
-    justify-content: center;
+    @include flex;
+    @include justify-content;
     flex-direction: column;
     height: 100vh;
 
     p {
       word-break: keep-all;
-      font-family: 'NanumMyeongjo';
+      font-family: $engFont;
       font-size: 3vw;
       line-height: 1.5;
     }
@@ -372,23 +323,23 @@
     transition: opacity .5s ease, transform .5s ease;
 
     &:nth-child(1) {
-      transition-delay: .2s;
+      transition-delay: .3s;
     }
 
     &:nth-child(2) {
-      transition-delay: .4s;
-    }
-
-    &:nth-child(3) {
       transition-delay: .6s;
     }
 
+    &:nth-child(3) {
+      transition-delay: .9s;
+    }
+
     &:nth-child(4) {
-      transition-delay: .8s;
+      transition-delay: 1.2s;
     }
 
     &:nth-child(5) {
-      transition-delay: 1s;
+      transition-delay: 1.5s;
     }
 
     &.on {
@@ -399,11 +350,12 @@
     position: relative;
     perspective: 600px;
     width: 100%;
-    height: 5vw;
+    height: 6vw;
     text-align: center;
   }
 
-  .front, .back {
+  .front,
+  .back {
     position: absolute;
     width: 100%;
     transition: 1s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -447,12 +399,12 @@
 /* ability */
 
 #ability {
-  border-top: 1px solid #1e1e1e;
-  border-bottom: 1px solid #1e1e1e;
+  border-top: 1px solid $black;
+  border-bottom: 1px solid $black;
 }
 
 .ability_wrap {
-  .graph-wrapper {
+  .graph_wrap {
     position: relative;
     padding: 25px;
     max-width: 1200px;
@@ -466,19 +418,20 @@
       margin: 0;
       margin-bottom: 15px;
       padding: 0 10px;
+      font-family: $engFont;
       font-size: 3vw;
       background: #fff;
       line-height: 30px;
     }
   }
 
-  .percent-indicator {
+  .percent_indicator {
     position: absolute;
     top: 0;
     right: 25px;
     left: 25px;
     bottom: 0;
-    display: flex;
+    @include flex;
     justify-content: space-between;
     width: calc(100% - 90px);
     padding: 100px 20px;
@@ -490,12 +443,14 @@
       border-left: 2px dashed #aaa;
     }
 
-    .per-0 {
+    .per_0 {
       transform: translateX(1px);
     }
 
     div {
-      &::before, &::after {
+
+      &::before,
+      &::after {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -515,9 +470,10 @@
     li {
       margin-bottom: 10px;
       padding: 20px 0;
-      background: #000;
+      background: $black;
       color: #fff;
       text-align: left;
+      font-family: $engFont;
       font-size: 1vw;
       width: 0;
       transition: width 1s;
@@ -543,7 +499,7 @@
       }
     }
 
-    &.on li{
+    &.on li {
       &.item1 {
         width: 80%;
       }
@@ -557,6 +513,7 @@
         width: 60%;
         transition-delay: 0.6s;
       }
+
       &.item4 {
         width: 60%;
         transition-delay: 0.9s;
@@ -564,107 +521,39 @@
     }
   }
 
-  .percent-indicator {
-    .per-0::before {
+  .percent_indicator {
+    .per_0::before {
       content: '0%';
     }
 
-    .per-20::before {
+    .per_20::before {
       content: '20%';
     }
 
-    .per-40::before {
+    .per_40::before {
       content: '40%';
     }
 
-    .per-60::before {
+    .per_60::before {
       content: '60%';
     }
 
-    .per-80::before {
+    .per_80::before {
       content: '80%';
     }
 
-    .per-100::before {
+    .per_100::before {
       content: '100%';
     }
   }
-
-  .left {
-    flex-basis: 50%;
-    padding: 5vw 0;
-    line-height: 2;
-
-    strong {
-      font-family: 'NanumMyeongjo';
-      display: block;
-      font-size: 6vw;
-      opacity: 0;
-    }
-  }
-
-  &.show .left strong {
-    animation: revealY 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-
-    &:nth-child(1) {
-      animation-delay: .2s;
-    }
-
-    &:nth-child(2) {
-      animation-delay: .4s;
-    }
-
-    &:nth-child(3) {
-      animation-delay: .55s;
-    }
-
-    &:nth-child(4) {
-      animation-delay: .65s;
-    }
-  }
-
-  .right {
-    position: relative;
-    flex-basis: 50%;
-    border-left: 1px solid #222;
-    line-height: 1.5;
-    box-sizing: border-box;
-
-    p {
-      font-size: 3vw;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 0 5vw;
-    }
-  }
-
-  .show2, .show3, .show4 {
-    display: none;
-  }
-
-  .show2.show, .show3.show, .show4.show {
-    display: block;
-  }
 }
 
-@keyframes revealY {
-  0% {
-    transform: translateY(100%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.poroject_wrap {
+.project_wrap {
   padding: 0 10vw;
 }
 
 .project_box {
-  display: flex;
+  @include flex;
   justify-content: space-between;
   padding: 10vw 0;
 
@@ -674,19 +563,18 @@
 
   .left {
     flex-basis: 40%;
-    display: flex;
+    @include flex;
     flex-direction: column;
-    justify-content: center;
-    cursor: pointer;
+    @include justify-content;
 
     strong {
       position: relative;
       display: block;
-      font-family: "NanumMyeongjo";
       font-size: 2vw;
       font-weight: 700;
       padding: 2vw 0;
       border-bottom: 1px solid #ddd;
+      cursor: pointer;
 
       &::after {
         content: "";
@@ -694,7 +582,8 @@
         height: 2vw;
         display: block;
         position: absolute;
-        top: 2vw;
+        top: 50%;
+        transform: translateY(-50%);
         right: 0;
         background: url(../img/btn-webview.png);
         background-size: contain;
@@ -733,9 +622,19 @@
 
     a {
       position: absolute;
-      bottom: -10%;
-      left: 0;
-      font-size: 2vw;
+      bottom: -5%;
+      right: 0;
+      display: block;
+      width: 150px;
+      border-radius: 50px;
+      
+      svg {
+        font-family: $engFont;
+
+        .siteView-btn {
+          font-size: 58px;
+        }
+      }
     }
   }
 }
@@ -743,7 +642,11 @@
 /* fade animation */
 
 .fade {
-  .fade_up, .fade_down, .fade_right, .fade_left {
+
+  .fade_up,
+  .fade_down,
+  .fade_right,
+  .fade_left {
     opacity: 0;
     transition: all 1s;
   }
@@ -765,126 +668,14 @@
   }
 
   &.on {
-    .fade_up, .fade_down, .fade_right, .fade_left {
+
+    .fade_up,
+    .fade_down,
+    .fade_right,
+    .fade_left {
       opacity: 1;
       transform: translate(0, 0);
     }
-  }
-}
-
-/* script */
-
-#script {
-  background: #121212;
-  color: #fff;
-}
-
-.script_wrap {
-  height: 100vh;
-  max-width: 80%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .script_box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 26vw;
-    background: #fff;
-  }
-
-  .txt_box {
-    width: 20vw;
-    padding: 2.6vw;
-    text-align: center;
-    line-height: 2.6vw;
-    font-size: 2vw;
-    font-weight: 900;
-    color: #555;
-
-    ul {
-      height: 2.6vw;
-      color: #fff;
-      overflow: hidden;
-
-      li {
-        margin-bottom: 2.6vw;
-
-        &:nth-child(1) {
-          animation: txtUp 5s cubic-bezier(0.04, 0.57, 0.89, 0.39) infinite;
-        }
-
-        span {
-          display: inline-block;
-          padding: 0 0.7vw;
-        }
-
-        &:nth-child(1) span {
-          background: #ff0000;
-        }
-
-        &:nth-child(2) span {
-          background: #008000;
-        }
-
-        &:nth-child(3) span {
-          background: #0000ff;
-        }
-      }
-    }
-  }
-
-  .script_txt {
-    width: 100%;
-    text-align: center;
-
-    h3 {
-      font-size: 1.5vw;
-      margin: 3vh 0;
-    }
-
-    p {
-      font-size: 3vw;
-      line-height: 1.5;
-    }
-  }
-}
-
-/* 5%만큼 상단이동후 28%는 정지상태유지 */
-@keyframes txtUp {
-  0% {
-    margin-top: 5.2vw;
-  }
-
-  5% {
-    margin-top: 0px;
-  }
-
-  33% {
-    margin-top: 0px;
-  }
-
-  38% {
-    margin-top: -5.2vw;
-  }
-
-  66% {
-    margin-top: -5.2vw;
-  }
-
-  71% {
-    margin-top: -10.4vw;
-  }
-
-  99% {
-    margin-top: -10.4vw;
-  }
-
-  100% {
-    margin-top: -13vw;
   }
 }
 
@@ -892,36 +683,39 @@
 
 #footer {
   position: relative;
-  background: #1e1e1e;
+  background: $black;
   color: #fff;
 }
 
 .footer_wrap {
   max-width: 80%;
   margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex;
+  @include justify-content;
+  @include align-items;
   height: 100vh;
 
   .contact_box {
     text-align: center;
 
     p {
+      font-family: $engFont;
       font-size: 3vw;
       padding-bottom: 10vh;
     }
 
     input {
+      font-family: $engFont;
       width: 100%;
-      border: 1px solid #1e1e1e;
+      border: 1px solid $black;
       padding: 1vw;
       margin-bottom: 2vh;
     }
 
     textarea {
+      font-family: $engFont;
       width: 100%;
-      border: 1px solid #1e1e1e;
+      border: 1px solid $black;
       padding: 1vw;
       margin-bottom: 2vh;
       height: 20vh;
@@ -930,9 +724,10 @@
     .submit {
       width: 30%;
       border: 1px solid #fff;
-      background: #1e1e1e;
+      background: $black;
       color: #fff;
-      border-radius: 1.5vw;
+      border-radius: 50px;
+      font-family: $engFont;
       font-size: 1vw;
       padding: 1vw;
       cursor: pointer;
@@ -989,90 +784,200 @@
   }
 }
 
-@media (max-width: 1280px) {}
-
-@media (max-width: 768px) {
-  .ability_wrap ul {
-    flex-direction: column;
-
-    li {
-      margin-right: 0;
-
-      h3 {
-        font-size: 30px;
-      }
-
-      p {
-        font-size: 12px;
-        margin-bottom: 4vw;
-      }
-
-      span {
-        font-size: 30px;
-      }
-    }
+//반응형
+@media (max-width: 1024px) {
+  .header_wrap .toggle {
+    right: 4vw;
   }
 
-  .poroject_wrap {
-    .works {
-      flex-direction: column;
-    }
-
-    .right {
-      width: 65%;
-
-      h3 {
-        font-size: 30px;
-        margin: 2vw 0;
-      }
-
-      p {
-        font-size: 12px;
-      }
-
-      a {
-        font-size: 12px;
-        padding: 1.5vw 0.5vw;
-        margin-right: 1vw;
-        width: 30%;
-      }
-    }
-
-    .works:nth-child(even) {
-      flex-direction: column;
-    }
+  #gnb ul li {
+    padding-bottom: 3vw;
   }
 
-  #contact {
-    padding-top: 200vh;
+  .home_wrap h1 {
+    font-size: 7vw;
   }
 
-  .contact_wrap {
-    flex-direction: column;
-    padding-bottom: 20vh;
-    height: 70vh;
+  .index_wrap .band p {
+    padding: 4vw 0;
+  }
 
-    .left {
-      h2 {
-        font-size: 30px;
-      }
+  .introduce_wrap .img_box div button {
+    padding: 1vw 1.6vw;
+    font-size: 3vw;
+  }
 
-      ul li {
-        padding: 1.5vw;
-        font-size: 12px;
-      }
+  .introduce_wrap .img_box div p {
+    width: 23vw;
+    font-size: 2vw;
+  }
 
-      max-width: 100%;
-    }
+  .introduce_wrap .desc {
+    height: 8vw;
+  }
 
-    .right {
-      max-width: 100%;
+  .ability_wrap .graph-wrapper h2 {
+    font-size: 5vw;
+  }
 
-      .contact_box p {
-        font-size: 12px;
-      }
-    }
+  .ability_wrap .graph li {
+    font-size: 16px;
+  }
+
+  .project_box {
+    flex-direction: column-reverse;
+  }
+  
+  .project_box:nth-child(odd) {
+    flex-direction: column-reverse;
+  }
+
+  .project_box .right {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5vw;
+  }
+
+  .project_box .right img {
+    width: 45vw;
+    height: 30vw;
+  }
+
+  .project_box .right a {
+    bottom: 5%;
+    right: 20%;
+    width: 120px;
+  }
+
+  .project_box .left strong {
+    font-size: 3vw;
+  }
+
+  .project_box .left strong::after {
+    width: 3vw;
+    height: 3vw;
+  }
+
+  .project_box::after {
+    width: 3vw;
+    height: 3vw;
+  }
+
+  .project_box .left .desc p {
+    font-size: 2vw;
+  }
+
+  .footer_wrap .contact_box p {
+    font-size: 4vw;
+  }
+
+  .footer_wrap .contact_box input {
+    padding: 2vw;
+  }
+
+  .footer_wrap .contact_box textarea {
+    padding: 2vw;
+  }
+
+  .footer_wrap .contact_box .submit {
+    font-size: 2vw;
+    border-radius: 50px;
+    padding: 1.5vw;
+  }
+
+  .footer_wrap .scroll {
+    right: 15%;
   }
 }
 
-@media (max-width: 480px) {}
+@media (max-width: 768px) {
+  .introduce_wrap .img_box {
+    height: 80vh;
+  }
+
+  .introduce_wrap .txt_box {
+    height: 70vh;
+  }
+
+  .ability_wrap .percent-indicator {
+   padding: 60px 20px;
+  }
+
+  .ability_wrap .percent-indicator div::before, .ability_wrap .percent-indicator div::after {
+    font-size: 18px;
+  }
+
+  .ability_wrap .graph {
+    margin: 100px auto;
+  }
+
+  .ability_wrap .graph li {
+    font-size: 12px;
+    padding: 15px 0;
+  }
+
+  .project_box .right img {
+    width: 50vw;
+    height: 35vw;
+  }
+
+  .project_box .right a {
+    right: 15%;
+  }
+}  
+
+@media (max-width: 500px) {
+  .header_wrap .toggle {
+    right: 4vw;
+  }
+
+  .home_wrap h1 {
+    font-size: 36px;
+  }
+
+  .introduce_wrap .img_box div button {
+    font-size: 14px;
+  }
+
+  .introduce_wrap .img_box div p {
+    width: 120px;
+    font-size: 12px;
+  }
+  .introduce_wrap .img_box {
+    height: 60vh;
+  }
+
+  .introduce_wrap .txt_box {
+    height: 50vh;
+  }
+
+  .introduce_wrap .txt_box p {
+    font-size: 14px;
+  }
+
+  .ability_wrap .graph-wrapper h2 {
+    font-size: 7vw;
+  }
+
+  .project_box .left strong {
+    font-size: 16px;
+    padding: 3vw 0;
+  }
+
+  .project_box .left .desc p {
+    font-size: 14px;
+  }
+
+  .project_box .right a {
+    width: 90px;
+  }
+
+  .footer_wrap .contact_box p {
+    font-size: 25px;
+  }
+
+  .footer_wrap .contact_box .submit {
+    font-size: 14px;
+  }
+
+}
